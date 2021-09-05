@@ -1,15 +1,22 @@
+import Track from './components/Track'
 import { defaultApi } from './fetch'
 import { useQuery } from 'react-query'
 
 const App = (): JSX.Element => {
-  const { data } = useQuery('params', async () => {
-    const data = await defaultApi.paramsJsonGet()
-    return data
+  const { data, isLoading } = useQuery('params', async () => {
+    return await defaultApi.paramsJsonGet()
   })
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <div>
-      <div>{JSON.stringify(data?.players)}</div>
-    </div>
+    <Track
+      title={data.master.track.title}
+      artist={data.master.track.artist}
+      imageUrl={`/artwork/${data.master.number}`}
+    />
   )
 }
 
