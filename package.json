@@ -13,7 +13,9 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier . \"!test*\" --check",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate": "run-s generate:api fix",
+    "generate:api": "openapi-generator-cli generate"
   },
   "dependencies": {
     "react": "^17.0.2",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@mdx-js/react": "^1.6.22",
+    "@openapitools/openapi-generator-cli": "^2.4.1",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-docs": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",

@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+  title: Beat Link Trigger Overlay API
+  version: 0.6.3
+externalDocs:
+  description: Offical Reference
+  url: https://blt-guide.deepsymmetry.org/beat-link-trigger/0.6.3/obsoverlay#variables
+paths:
+  /params.json:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Data"
+          description: successful operation
+components:
+  schemas:
+    Data:
+      properties:
+        collections:
+          $ref: "#/components/schemas/Players"
+        master:
+          $ref: "#/components/schemas/Player"
+        mixers:
+          $ref: "#/components/schemas/Players"
+        players:
+          $ref: "#/components/schemas/Players"
+      type: object
+    Player:
+      required:
+        - beat-within-bar
+        - is-synced
+        - address
+        - beat-number
+        - pitch-display
+        - is-track-loaded
+        - cue-countdown-display
+        - number
+        - is-playing
+        - is-looping
+        - is-playing-cdj-mode
+        - name
+        - is-paused
+        - time-remaining
+        - time-played
+        - is-playing-backwards
+        - pitch
+        - track-bpm
+        - pitch-multiplier
+        - is-playing-vinyl-mode
+        - firmware-version
+        - is-searching
+        - is-busy
+        - kind
+        - track-number
+        - is-on-air
+        - track-source-player
+        - is-playing-forwards
+        - is-tempo-master
+        - is-bpm-only-synced
+        - is-cued
+        - tempo
+        - is-at-end
+        - cue-countdown
+        - track
+      properties:
+        address:
+          description: The IP address at which the player can be found on the network.
+          type: string
+        beat-number:
+          description: The beat currently playing, if known. The first beat of the track is beat 1, and they increment steadily from there.
+          type: number
+        beat-within-bar:
+          description: Tracks progress through measures of the song. The first (down) beat of a measure has the value 1, then it grows to 4 before jumping back to 1 at the start of the next bar.
+          type: number
+        cue-countdown:
+          type: number
+        cue-countdown-display:
+          description: Tracks how many beats remain until the next hot cue or memory point in the track. If there are no cues left in the track, or if the next one is more than 64 bars from now, this has the value 511. If there is a cue coming up within 64 bars (256 beats), this will count down those beats, from the value 256 to 0, meaning we have reached the cue. As soon as the next beat arrives, it will start tracking the next hot cue or memory point.
+          type: string
+        firmware-version:
+          type: string
+        is-at-end:
+          type: boolean
+        is-bpm-only-synced:
+          type: boolean
+        is-busy:
+          type: boolean
+        is-cued:
+          type: boolean
+        is-looping:
+          type: boolean
+        is-on-air:
+          type: boolean
+        is-paused:
+          type: boolean
+        is-playing:
+          type: boolean
+        is-playing-backwards:
+          type: boolean
+        is-playing-cdj-mode:
+          type: boolean
+        is-playing-forwards:
+          type: boolean
+        is-playing-vinyl-mode:
+          type: boolean
+        is-searching:
+          type: boolean
+        is-synced:
+          type: boolean
+        is-tempo-master:
+          type: boolean
+        is-track-loaded:
+          type: boolean
+        kind:
+          type: string
+        name:
+          type: string
+        number:
+          type: number
+        pitch:
+          type: number
+        pitch-display:
+          type: string
+        pitch-multiplier:
+          type: number
+        tempo:
+          type: number
+        time-played:
+          $ref: "#/components/schemas/Time"
+        time-remaining:
+          $ref: "#/components/schemas/Time"
+        track:
+          $ref: "#/components/schemas/Track"
+        track-bpm:
+          type: number
+        track-number:
+          type: number
+        track-source-player:
+          type: number
+      type: object
+    Players:
+      additionalProperties:
+        $ref: "#/components/schemas/Player"
+      type: object
+    Time:
+      required:
+        - raw-milliseconds
+        - minutes
+        - seconds
+        - frames
+        - frame-tenths
+        - display
+      properties:
+        display:
+          type: string
+        frame-tenths:
+          type: number
+        frames:
+          type: number
+        minutes:
+          type: number
+        raw-milliseconds:
+          type: number
+        seconds:
+          type: number
+      type: object
+    Track:
+      required:
+        - genre
+        - remixer
+        - starting-tempo
+        - slot
+        - key
+        - original-artist
+        - added
+        - type
+        - duration
+        - artist
+        - title
+        - year
+        - label
+        - id
+        - comment
+        - album
+        - rating
+      properties:
+        album:
+          type: string
+        artist:
+          type: string
+        comment:
+          type: string
+        duration:
+          type: number
+        genre:
+          type: string
+        id:
+          type: number
+        key:
+          type: string
+        rating:
+          type: number
+        slot:
+          type: string
+        starting-tempo:
+          type: number
+        title:
+          type: string
+        type:
+          type: string
+        year:
+          type: number
+      type: object

@@ -1,15 +1,14 @@
+import { defaultApi } from './fetch'
 import { useQuery } from 'react-query'
 
-const getParams = async (): Promise<string> => {
-  const data = await fetch('/params.json')
-  return data.text()
-}
-
 const App = (): JSX.Element => {
-  const { data } = useQuery('params', getParams)
+  const { data } = useQuery('params', async () => {
+    const data = await defaultApi.paramsJsonGet()
+    return data
+  })
   return (
     <div>
-      <div>{data}</div>
+      <div>{JSON.stringify(data?.players)}</div>
     </div>
   )
 }

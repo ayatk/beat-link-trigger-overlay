@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/OpenAPITools/openapi-generator-cli/master/apps/generator-cli/src/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "5.1.1",
+    "generators": {
+      "v3.0": {
+        "glob": "openapi.yml",
+        "output": "src/api",
+        "generatorName": "typescript-fetch",
+        "additionalProperties": {
+          "enablePostProcessFile": true,
+          "supportsES6": true,
+          "nullSafeAdditionalProps": true,
+          "modelPropertyNaming": "camelCase",
+          "typescriptThreePlus": true,
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+}
