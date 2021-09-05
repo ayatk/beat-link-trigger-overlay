@@ -5,8 +5,8 @@
   "private": true,
   "packageManager": "yarn@3.0.2",
   "scripts": {
-    "build": "parcel build index.html",
-    "start": "parcel index.html",
+    "build": "parcel build public/overlay.html --dist-dir dist --public-url public/",
+    "start": "parcel public/overlay.html --dist-dir dist --public-url public/",
     "fix": "run-s fix:eslint fix:prettier",
     "fix:eslint": "yarn lint:eslint --fix",
     "fix:prettier": "yarn lint:prettier --write",
