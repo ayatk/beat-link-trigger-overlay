@@ -4482,6 +4482,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xstate/react@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@xstate/react@npm:1.6.1"
+  dependencies:
+    use-isomorphic-layout-effect: ^1.0.0
+    use-subscription: ^1.3.0
+  peerDependencies:
+    "@xstate/fsm": ^1.0.0
+    react: ^16.8.0 || ^17.0.0
+    xstate: ^4.11.0
+  peerDependenciesMeta:
+    "@xstate/fsm":
+      optional: true
+    xstate:
+      optional: true
+  checksum: 4659dd56e31609f28e2b71c3ffed3e72626e989fedd780d4776eb9633b7b64ab56a5468bb75349fca528671ef41171ac5fefe0fe10b24d527229829c66a9f781
+  languageName: node
+  linkType: hard
+
 "@xtuc/ieee754@npm:^1.2.0":
   version: 1.2.0
   resolution: "@xtuc/ieee754@npm:1.2.0"
@@ -5408,6 +5427,7 @@ __metadata:
     "@types/styled-components": ^5.1.14
     "@typescript-eslint/eslint-plugin": ^4.30.0
     "@typescript-eslint/parser": ^4.30.0
+    "@xstate/react": ^1.6.1
     babel-loader: ^8.2.2
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
@@ -5423,6 +5443,7 @@ __metadata:
     react-query: ^3.21.1
     styled-components: ^5.3.1
     typescript: ^4.4.2
+    xstate: ^4.23.4
   languageName: unknown
   linkType: soft
 
@@ -16747,6 +16768,17 @@ typescript@^4.4.2:
   languageName: node
   linkType: hard
 
+"use-subscription@npm:^1.3.0":
+  version: 1.5.1
+  resolution: "use-subscription@npm:1.5.1"
+  dependencies:
+    object-assign: ^4.1.1
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+  checksum: 96e64977a573244fd11350a3141b2cf57fb72dd9dd902f387c8a0a565d0a948bc81588bd7378c6ef6defc0d1119f37f73aac4a7a287c8443abd444bd4e7bbea8
+  languageName: node
+  linkType: hard
+
 "use@npm:^3.1.0":
   version: 3.1.1
   resolution: "use@npm:3.1.1"
@@ -17319,6 +17351,13 @@ typescript@^4.4.2:
   version: 2.2.0
   resolution: "xmlchars@npm:2.2.0"
   checksum: 8c70ac94070ccca03f47a81fcce3b271bd1f37a591bf5424e787ae313fcb9c212f5f6786e1fa82076a2c632c0141552babcd85698c437506dfa6ae2d58723062
+  languageName: node
+  linkType: hard
+
+"xstate@npm:^4.23.4":
+  version: 4.23.4
+  resolution: "xstate@npm:4.23.4"
+  checksum: 14bdebb12bf93e92979e2a0cadc75a9418438f15f6741e9a453295f5d8dd9e6236e95a9a632837595b4889fff87e11c1788e33c2814552178d9ed633e59105a4
   languageName: node
   linkType: hard
 
