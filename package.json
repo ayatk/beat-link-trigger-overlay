@@ -21,9 +21,9 @@
     "@xstate/react": "^1.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-query": "^3.21.1",
-    "styled-components": "^5.3.1",
-    "xstate": "^4.23.4"
+    "react-query": "^3.27.0",
+    "styled-components": "^5.3.3",
+    "xstate": "^4.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
