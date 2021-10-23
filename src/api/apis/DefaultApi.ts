@@ -28,11 +28,11 @@ export interface DefaultApiInterface {
    * @throws {RequiredError}
    * @memberof DefaultApiInterface
    */
-  paramsJsonGetRaw(): Promise<runtime.ApiResponse<Data>>
+  paramsJsonGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Data>>
 
   /**
    */
-  paramsJsonGet(): Promise<Data>
+  paramsJsonGet(initOverrides?: RequestInit): Promise<Data>
 }
 
 /**
@@ -41,25 +41,28 @@ export interface DefaultApiInterface {
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
   /**
    */
-  async paramsJsonGetRaw(): Promise<runtime.ApiResponse<Data>> {
+  async paramsJsonGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Data>> {
     const queryParameters: any = {}
 
     const headerParameters: runtime.HTTPHeaders = {}
 
-    const response = await this.request({
-      path: `/params.json`,
-      method: 'GET',
-      headers: headerParameters,
-      query: queryParameters,
-    })
+    const response = await this.request(
+      {
+        path: `/params.json`,
+        method: 'GET',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides
+    )
 
     return new runtime.JSONApiResponse(response, jsonValue => DataFromJSON(jsonValue))
   }
 
   /**
    */
-  async paramsJsonGet(): Promise<Data> {
-    const response = await this.paramsJsonGetRaw()
+  async paramsJsonGet(initOverrides?: RequestInit): Promise<Data> {
+    const response = await this.paramsJsonGetRaw(initOverrides)
     return await response.value()
   }
 }

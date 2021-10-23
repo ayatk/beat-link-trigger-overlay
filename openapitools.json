@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/OpenAPITools/openapi-generator-cli/master/apps/generator-cli/src/config.schema.json",
   "spaces": 2,
   "generator-cli": {
-    "version": "5.1.1",
+    "version": "5.2.1",
     "generators": {
       "v3.0": {
         "glob": "openapi.yml",
