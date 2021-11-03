@@ -113,7 +113,6 @@ const Container = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
 `
 
 const Title = styled.div<{ state: TransitionState }>`
