@@ -13,16 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime'
-import {
-  Time,
-  TimeFromJSON,
-  TimeFromJSONTyped,
-  TimeToJSON,
-  Track,
-  TrackFromJSON,
-  TrackFromJSONTyped,
-  TrackToJSON,
-} from './'
+import { Time, TimeFromJSON, TimeFromJSONTyped, TimeToJSON } from './Time'
+import { Track, TrackFromJSON, TrackFromJSONTyped, TrackToJSON } from './Track'
 
 /**
  *

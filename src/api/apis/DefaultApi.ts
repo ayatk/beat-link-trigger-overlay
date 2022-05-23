@@ -28,11 +28,13 @@ export interface DefaultApiInterface {
    * @throws {RequiredError}
    * @memberof DefaultApiInterface
    */
-  paramsJsonGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Data>>
+  paramsJsonGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverideFunction
+  ): Promise<runtime.ApiResponse<Data>>
 
   /**
    */
-  paramsJsonGet(initOverrides?: RequestInit): Promise<Data>
+  paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Data>
 }
 
 /**
@@ -41,7 +43,9 @@ export interface DefaultApiInterface {
 export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
   /**
    */
-  async paramsJsonGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Data>> {
+  async paramsJsonGetRaw(
+    initOverrides?: RequestInit | runtime.InitOverideFunction
+  ): Promise<runtime.ApiResponse<Data>> {
     const queryParameters: any = {}
 
     const headerParameters: runtime.HTTPHeaders = {}
@@ -61,7 +65,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
   /**
    */
-  async paramsJsonGet(initOverrides?: RequestInit): Promise<Data> {
+  async paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Data> {
     const response = await this.paramsJsonGetRaw(initOverrides)
     return await response.value()
   }

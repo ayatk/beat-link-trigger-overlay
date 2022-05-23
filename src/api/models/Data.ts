@@ -13,7 +13,7 @@
  */
 
 import { exists, mapValues } from '../runtime'
-import { Player, PlayerFromJSON, PlayerFromJSONTyped, PlayerToJSON } from './'
+import { Player, PlayerFromJSON, PlayerFromJSONTyped, PlayerToJSON } from './Player'
 
 /**
  *
