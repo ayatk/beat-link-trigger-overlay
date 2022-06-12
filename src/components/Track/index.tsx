@@ -1,108 +1,4 @@
-import { SlideLeft } from '../../keyframe'
-import { useMachine } from '@xstate/react'
-import { useEffect } from 'react'
-import styled, { css } from 'styled-components'
-import { createMachine, State } from 'xstate'
-
-export interface Props {
-  playing: boolean
-  title: string
-  artist: string
-  imageUrl: string
-}
-
-type TransitionContext = unknown
-
-type TransitionState = State<TransitionContext, TransitionEvent, TransitionTypestate>
-
-type TransitionEvent = { type: 'NEXT' } | { type: 'END' } | { type: 'PLAY' } | { type: 'STOP' }
-
-type TransitionTypestate =
-  | {
-      value: 'hide'
-      context: TransitionContext
-    }
-  | {
-      value: 'slideIn'
-      context: TransitionContext
-    }
-  | {
-      value: 'visible'
-      context: TransitionContext
-    }
-  | {
-      value: 'slideOut'
-      context: TransitionContext
-    }
-
-const transitionMachine = createMachine<TransitionContext, TransitionEvent, TransitionTypestate>({
-  id: 'transition',
-  initial: 'hide',
-  states: {
-    hide: {
-      on: {
-        NEXT: { target: 'slideIn' },
-      },
-    },
-    slideIn: {
-      on: {
-        NEXT: { target: 'visible' },
-      },
-    },
-    visible: {
-      on: {
-        NEXT: { target: 'slideOut' },
-      },
-    },
-    slideOut: {
-      on: {
-        END: { target: 'hide' },
-        NEXT: { target: 'slideIn' },
-      },
-    },
-  },
-})
-
-const Track = ({ playing = false, title, artist, imageUrl }: Props): JSX.Element => {
-  const [state, send] = useMachine(transitionMachine)
-
-  const onAnimationEnd = () => {
-    state.matches('slideOut') && !playing ? send('END') : send('NEXT')
-  }
-
-  useEffect(() => {
-    if (playing) {
-      send('NEXT')
-    } else {
-      if (state.matches('visible')) {
-        send('NEXT')
-      }
-    }
-  }, [playing])
-
-  return (
-    <Container>
-      <Hidden>
-        <StyledCoverJacket state={state} src={imageUrl} onAnimationEnd={onAnimationEnd} />
-      </Hidden>
-      <InfoContainer>
-        <Hidden>
-          <Title state={state}>{title}</Title>
-        </Hidden>
-        <Hidden>
-          <Artist state={state}>{artist}</Artist>
-        </Hidden>
-      </InfoContainer>
-    </Container>
-  )
-}
-
-const SlideIn = css`
-  animation: ${SlideLeft(true)} 0.7s ease-out 1s backwards;
-`
-const SlideOut = css`
-  animation: ${SlideLeft(false)} 0.7s ease-in 0.8s backwards;
-`
+import styled from 'styled-components'
 
 const Container = styled.div`
   display: inline-grid;
@@ -112,80 +8,33 @@ const Container = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
+  gap: 4px;
   flex-direction: column;
 `
 
-const Title = styled.div<{ state: TransitionState }>`
+const Title = styled.div`
   display: inline-block;
   font-size: 24px;
   font-weight: bold;
-
-  ${({ state }) => {
-    switch (state.value) {
-      case 'hide':
-        return css`
-          visibility: hidden;
-        `
-      case 'slideIn':
-        return SlideIn
-      case 'slideOut':
-        return SlideOut
-      case 'visible':
-        return css`
-          visibility: visible;
-        `
-    }
-  }}
 `
 
-const Artist = styled.div<{ state: TransitionState }>`
+const Artist = styled.div`
   display: inline-block;
   font-size: 16px;
   color: #999;
-
-  ${({ state }) => {
-    switch (state.value) {
-      case 'hide':
-        return css`
-          visibility: hidden;
-        `
-      case 'slideIn':
-        return SlideIn
-      case 'slideOut':
-        return SlideOut
-      case 'visible':
-        return css`
-          visibility: visible;
-        `
-    }
-  }}
 `
 
-const StyledCoverJacket = styled.img<{ state: TransitionState }>`
-  width: 80px;
-  height: 80px;
-  border-radius: 4px;
+export interface Props {
+  title: string
+  artist: string
+}
 
-  ${({ state }) => {
-    switch (state.value) {
-      case 'hide':
-        return css`
-          visibility: hidden;
-        `
-      case 'slideIn':
-        return SlideIn
-      case 'slideOut':
-        return SlideOut
-      case 'visible':
-        return css`
-          visibility: visible;
-        `
-    }
-  }}
-`
-
-const Hidden = styled.div`
-  overflow: hidden;
-`
-
+const Track = ({ title, artist }: Props): JSX.Element => (
+  <Container>
+    <InfoContainer>
+      <Title>{title}</Title>
+      <Artist>{artist}</Artist>
+    </InfoContainer>
+  </Container>
+)
 export default Track

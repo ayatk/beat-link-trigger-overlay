@@ -10,18 +10,13 @@ const App = (): JSX.Element => {
 
   const [playing, setPlaying] = useState(false)
 
-  if (isLoading) {
+  if (isLoading || data?.master == undefined) {
     return <div>Loading...</div>
   }
 
   return (
     <>
-      <Track
-        playing={playing}
-        title={data.players['1']?.track.title}
-        artist={data.players['1']?.track.artist}
-        imageUrl={`/artwork/${data.players['1']?.number}`}
-      />
+      <Track title={data.master.track.title} artist={data.master.track.artist} />
       <button onClick={() => setPlaying(!playing)}>Play: {playing.toString()}</button>
     </>
   )
