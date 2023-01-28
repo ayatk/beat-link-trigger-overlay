@@ -1,4 +1,4 @@
-import { Keyframes, keyframes } from 'styled-components'
+import { keyframes } from '@emotion/react'
 
 export const FadeIn = keyframes`
   from {
@@ -18,7 +18,7 @@ export const FadeOut = keyframes`
   }
 `
 
-export const SlideLeft = (fadeIn: boolean): Keyframes => keyframes`
+export const SlideLeft = (fadeIn: boolean) => keyframes`
   from {
     opacity: ${fadeIn ? 0 : 1};
     transform: translateX(${fadeIn ? -100 : 0}%);

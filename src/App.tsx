@@ -1,11 +1,17 @@
+import { useQuery } from 'react-query'
 import Track from './components/Track'
 import { defaultApi } from './fetch'
-import { useQuery } from 'react-query'
 
 const App = (): JSX.Element => {
-  const { data, isLoading } = useQuery('params', async () => {
-    return await defaultApi.paramsJsonGet()
-  })
+  const { data, isLoading } = useQuery(
+    'params',
+    async () => {
+      return await defaultApi.paramsJsonGet()
+    },
+    {
+      refetchInterval: 2000,
+    }
+  )
 
   if (isLoading || data?.master == undefined) {
     return <div>Loading...</div>
@@ -13,7 +19,11 @@ const App = (): JSX.Element => {
 
   return (
     <>
-      <Track title={data.master.track.title} artist={data.master.track.artist} />
+      <Track
+        title={data.master.track.title}
+        artist={data.master.track.artist}
+        imageUrl={`/artwork/${data.master.number}`}
+      />
     </>
   )
 }

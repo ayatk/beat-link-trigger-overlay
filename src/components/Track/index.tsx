@@ -1,7 +1,8 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const Container = styled.div`
-  display: inline-grid;
+  display: grid;
+  grid-auto-flow: column;
   grid-gap: 16px;
   grid-template-columns: auto 1fr;
 `
@@ -24,13 +25,21 @@ const Artist = styled.div`
   color: #999;
 `
 
+const StyledCoverJacket = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+`
+
 export interface Props {
   title: string
   artist: string
+  imageUrl: string
 }
 
-const Track = ({ title, artist }: Props): JSX.Element => (
+const Track = ({ title, artist, imageUrl }: Props): JSX.Element => (
   <Container>
+    <StyledCoverJacket src={imageUrl} />
     <InfoContainer>
       <Title>{title}</Title>
       <Artist>{artist}</Artist>

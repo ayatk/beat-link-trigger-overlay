@@ -1,6 +1,6 @@
-import Track, { Props } from '.'
 import { Meta, Story } from '@storybook/react'
 import React from 'react'
+import Track, { Props } from '.'
 
 export default {
   component: Track,
