@@ -13,7 +13,8 @@
  */
 
 import * as runtime from '../runtime'
-import { Data, DataFromJSON, DataToJSON } from '../models'
+import type { Data } from '../models'
+import { DataFromJSON, DataToJSON } from '../models'
 
 /**
  * DefaultApi - interface
@@ -29,12 +30,12 @@ export interface DefaultApiInterface {
    * @memberof DefaultApiInterface
    */
   paramsJsonGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverideFunction
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<Data>>
 
   /**
    */
-  paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Data>
+  paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Data>
 }
 
 /**
@@ -44,7 +45,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
   /**
    */
   async paramsJsonGetRaw(
-    initOverrides?: RequestInit | runtime.InitOverideFunction
+    initOverrides?: RequestInit | runtime.InitOverrideFunction
   ): Promise<runtime.ApiResponse<Data>> {
     const queryParameters: any = {}
 
@@ -65,7 +66,7 @@ export class DefaultApi extends runtime.BaseAPI implements DefaultApiInterface {
 
   /**
    */
-  async paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Data> {
+  async paramsJsonGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Data> {
     const response = await this.paramsJsonGetRaw(initOverrides)
     return await response.value()
   }

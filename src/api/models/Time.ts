@@ -57,6 +57,21 @@ export interface Time {
   seconds: number
 }
 
+/**
+ * Check if a given object implements the Time interface.
+ */
+export function instanceOfTime(value: object): boolean {
+  let isInstance = true
+  isInstance = isInstance && 'display' in value
+  isInstance = isInstance && 'frameTenths' in value
+  isInstance = isInstance && 'frames' in value
+  isInstance = isInstance && 'minutes' in value
+  isInstance = isInstance && 'rawMilliseconds' in value
+  isInstance = isInstance && 'seconds' in value
+
+  return isInstance
+}
+
 export function TimeFromJSON(json: any): Time {
   return TimeFromJSONTyped(json, false)
 }

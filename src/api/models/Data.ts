@@ -13,7 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime'
-import { Player, PlayerFromJSON, PlayerFromJSONTyped, PlayerToJSON } from './Player'
+import type { Player } from './Player'
+import { PlayerFromJSON, PlayerFromJSONTyped, PlayerToJSON } from './Player'
 
 /**
  *
@@ -45,6 +46,15 @@ export interface Data {
    * @memberof Data
    */
   players?: { [key: string]: Player | undefined }
+}
+
+/**
+ * Check if a given object implements the Data interface.
+ */
+export function instanceOfData(value: object): boolean {
+  let isInstance = true
+
+  return isInstance
 }
 
 export function DataFromJSON(json: any): Data {

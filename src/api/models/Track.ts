@@ -99,6 +99,28 @@ export interface Track {
   year: number
 }
 
+/**
+ * Check if a given object implements the Track interface.
+ */
+export function instanceOfTrack(value: object): boolean {
+  let isInstance = true
+  isInstance = isInstance && 'album' in value
+  isInstance = isInstance && 'artist' in value
+  isInstance = isInstance && 'comment' in value
+  isInstance = isInstance && 'duration' in value
+  isInstance = isInstance && 'genre' in value
+  isInstance = isInstance && 'id' in value
+  isInstance = isInstance && 'key' in value
+  isInstance = isInstance && 'rating' in value
+  isInstance = isInstance && 'slot' in value
+  isInstance = isInstance && 'startingTempo' in value
+  isInstance = isInstance && 'title' in value
+  isInstance = isInstance && 'type' in value
+  isInstance = isInstance && 'year' in value
+
+  return isInstance
+}
+
 export function TrackFromJSON(json: any): Track {
   return TrackFromJSONTyped(json, false)
 }

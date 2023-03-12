@@ -13,8 +13,10 @@
  */
 
 import { exists, mapValues } from '../runtime'
-import { Time, TimeFromJSON, TimeFromJSONTyped, TimeToJSON } from './Time'
-import { Track, TrackFromJSON, TrackFromJSONTyped, TrackToJSON } from './Track'
+import type { Time } from './Time'
+import { TimeFromJSON, TimeFromJSONTyped, TimeToJSON } from './Time'
+import type { Track } from './Track'
+import { TrackFromJSON, TrackFromJSONTyped, TrackToJSON } from './Track'
 
 /**
  *
@@ -232,6 +234,50 @@ export interface Player {
    * @memberof Player
    */
   trackSourcePlayer: number
+}
+
+/**
+ * Check if a given object implements the Player interface.
+ */
+export function instanceOfPlayer(value: object): boolean {
+  let isInstance = true
+  isInstance = isInstance && 'address' in value
+  isInstance = isInstance && 'beatNumber' in value
+  isInstance = isInstance && 'beatWithinBar' in value
+  isInstance = isInstance && 'cueCountdown' in value
+  isInstance = isInstance && 'cueCountdownDisplay' in value
+  isInstance = isInstance && 'firmwareVersion' in value
+  isInstance = isInstance && 'isAtEnd' in value
+  isInstance = isInstance && 'isBpmOnlySynced' in value
+  isInstance = isInstance && 'isBusy' in value
+  isInstance = isInstance && 'isCued' in value
+  isInstance = isInstance && 'isLooping' in value
+  isInstance = isInstance && 'isOnAir' in value
+  isInstance = isInstance && 'isPaused' in value
+  isInstance = isInstance && 'isPlaying' in value
+  isInstance = isInstance && 'isPlayingBackwards' in value
+  isInstance = isInstance && 'isPlayingCdjMode' in value
+  isInstance = isInstance && 'isPlayingForwards' in value
+  isInstance = isInstance && 'isPlayingVinylMode' in value
+  isInstance = isInstance && 'isSearching' in value
+  isInstance = isInstance && 'isSynced' in value
+  isInstance = isInstance && 'isTempoMaster' in value
+  isInstance = isInstance && 'isTrackLoaded' in value
+  isInstance = isInstance && 'kind' in value
+  isInstance = isInstance && 'name' in value
+  isInstance = isInstance && 'number' in value
+  isInstance = isInstance && 'pitch' in value
+  isInstance = isInstance && 'pitchDisplay' in value
+  isInstance = isInstance && 'pitchMultiplier' in value
+  isInstance = isInstance && 'tempo' in value
+  isInstance = isInstance && 'timePlayed' in value
+  isInstance = isInstance && 'timeRemaining' in value
+  isInstance = isInstance && 'track' in value
+  isInstance = isInstance && 'trackBpm' in value
+  isInstance = isInstance && 'trackNumber' in value
+  isInstance = isInstance && 'trackSourcePlayer' in value
+
+  return isInstance
 }
 
 export function PlayerFromJSON(json: any): Player {
