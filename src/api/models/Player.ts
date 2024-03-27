@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime'
+import { mapValues } from '../runtime'
 import type { Time } from './Time'
 import { TimeFromJSON, TimeFromJSONTyped, TimeToJSON } from './Time'
 import type { Track } from './Track'
@@ -240,44 +240,42 @@ export interface Player {
  * Check if a given object implements the Player interface.
  */
 export function instanceOfPlayer(value: object): boolean {
-  let isInstance = true
-  isInstance = isInstance && 'address' in value
-  isInstance = isInstance && 'beatNumber' in value
-  isInstance = isInstance && 'beatWithinBar' in value
-  isInstance = isInstance && 'cueCountdown' in value
-  isInstance = isInstance && 'cueCountdownDisplay' in value
-  isInstance = isInstance && 'firmwareVersion' in value
-  isInstance = isInstance && 'isAtEnd' in value
-  isInstance = isInstance && 'isBpmOnlySynced' in value
-  isInstance = isInstance && 'isBusy' in value
-  isInstance = isInstance && 'isCued' in value
-  isInstance = isInstance && 'isLooping' in value
-  isInstance = isInstance && 'isOnAir' in value
-  isInstance = isInstance && 'isPaused' in value
-  isInstance = isInstance && 'isPlaying' in value
-  isInstance = isInstance && 'isPlayingBackwards' in value
-  isInstance = isInstance && 'isPlayingCdjMode' in value
-  isInstance = isInstance && 'isPlayingForwards' in value
-  isInstance = isInstance && 'isPlayingVinylMode' in value
-  isInstance = isInstance && 'isSearching' in value
-  isInstance = isInstance && 'isSynced' in value
-  isInstance = isInstance && 'isTempoMaster' in value
-  isInstance = isInstance && 'isTrackLoaded' in value
-  isInstance = isInstance && 'kind' in value
-  isInstance = isInstance && 'name' in value
-  isInstance = isInstance && 'number' in value
-  isInstance = isInstance && 'pitch' in value
-  isInstance = isInstance && 'pitchDisplay' in value
-  isInstance = isInstance && 'pitchMultiplier' in value
-  isInstance = isInstance && 'tempo' in value
-  isInstance = isInstance && 'timePlayed' in value
-  isInstance = isInstance && 'timeRemaining' in value
-  isInstance = isInstance && 'track' in value
-  isInstance = isInstance && 'trackBpm' in value
-  isInstance = isInstance && 'trackNumber' in value
-  isInstance = isInstance && 'trackSourcePlayer' in value
-
-  return isInstance
+  if (!('address' in value)) return false
+  if (!('beatNumber' in value)) return false
+  if (!('beatWithinBar' in value)) return false
+  if (!('cueCountdown' in value)) return false
+  if (!('cueCountdownDisplay' in value)) return false
+  if (!('firmwareVersion' in value)) return false
+  if (!('isAtEnd' in value)) return false
+  if (!('isBpmOnlySynced' in value)) return false
+  if (!('isBusy' in value)) return false
+  if (!('isCued' in value)) return false
+  if (!('isLooping' in value)) return false
+  if (!('isOnAir' in value)) return false
+  if (!('isPaused' in value)) return false
+  if (!('isPlaying' in value)) return false
+  if (!('isPlayingBackwards' in value)) return false
+  if (!('isPlayingCdjMode' in value)) return false
+  if (!('isPlayingForwards' in value)) return false
+  if (!('isPlayingVinylMode' in value)) return false
+  if (!('isSearching' in value)) return false
+  if (!('isSynced' in value)) return false
+  if (!('isTempoMaster' in value)) return false
+  if (!('isTrackLoaded' in value)) return false
+  if (!('kind' in value)) return false
+  if (!('name' in value)) return false
+  if (!('number' in value)) return false
+  if (!('pitch' in value)) return false
+  if (!('pitchDisplay' in value)) return false
+  if (!('pitchMultiplier' in value)) return false
+  if (!('tempo' in value)) return false
+  if (!('timePlayed' in value)) return false
+  if (!('timeRemaining' in value)) return false
+  if (!('track' in value)) return false
+  if (!('trackBpm' in value)) return false
+  if (!('trackNumber' in value)) return false
+  if (!('trackSourcePlayer' in value)) return false
+  return true
 }
 
 export function PlayerFromJSON(json: any): Player {
@@ -285,7 +283,7 @@ export function PlayerFromJSON(json: any): Player {
 }
 
 export function PlayerFromJSONTyped(json: any, ignoreDiscriminator: boolean): Player {
-  if (json === undefined || json === null) {
+  if (json == null) {
     return json
   }
   return {
@@ -328,47 +326,44 @@ export function PlayerFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pl
 }
 
 export function PlayerToJSON(value?: Player | null): any {
-  if (value === undefined) {
-    return undefined
-  }
-  if (value === null) {
-    return null
+  if (value == null) {
+    return value
   }
   return {
-    address: value.address,
-    'beat-number': value.beatNumber,
-    'beat-within-bar': value.beatWithinBar,
-    'cue-countdown': value.cueCountdown,
-    'cue-countdown-display': value.cueCountdownDisplay,
-    'firmware-version': value.firmwareVersion,
-    'is-at-end': value.isAtEnd,
-    'is-bpm-only-synced': value.isBpmOnlySynced,
-    'is-busy': value.isBusy,
-    'is-cued': value.isCued,
-    'is-looping': value.isLooping,
-    'is-on-air': value.isOnAir,
-    'is-paused': value.isPaused,
-    'is-playing': value.isPlaying,
-    'is-playing-backwards': value.isPlayingBackwards,
-    'is-playing-cdj-mode': value.isPlayingCdjMode,
-    'is-playing-forwards': value.isPlayingForwards,
-    'is-playing-vinyl-mode': value.isPlayingVinylMode,
-    'is-searching': value.isSearching,
-    'is-synced': value.isSynced,
-    'is-tempo-master': value.isTempoMaster,
-    'is-track-loaded': value.isTrackLoaded,
-    kind: value.kind,
-    name: value.name,
-    number: value.number,
-    pitch: value.pitch,
-    'pitch-display': value.pitchDisplay,
-    'pitch-multiplier': value.pitchMultiplier,
-    tempo: value.tempo,
-    'time-played': TimeToJSON(value.timePlayed),
-    'time-remaining': TimeToJSON(value.timeRemaining),
-    track: TrackToJSON(value.track),
-    'track-bpm': value.trackBpm,
-    'track-number': value.trackNumber,
-    'track-source-player': value.trackSourcePlayer,
+    address: value['address'],
+    'beat-number': value['beatNumber'],
+    'beat-within-bar': value['beatWithinBar'],
+    'cue-countdown': value['cueCountdown'],
+    'cue-countdown-display': value['cueCountdownDisplay'],
+    'firmware-version': value['firmwareVersion'],
+    'is-at-end': value['isAtEnd'],
+    'is-bpm-only-synced': value['isBpmOnlySynced'],
+    'is-busy': value['isBusy'],
+    'is-cued': value['isCued'],
+    'is-looping': value['isLooping'],
+    'is-on-air': value['isOnAir'],
+    'is-paused': value['isPaused'],
+    'is-playing': value['isPlaying'],
+    'is-playing-backwards': value['isPlayingBackwards'],
+    'is-playing-cdj-mode': value['isPlayingCdjMode'],
+    'is-playing-forwards': value['isPlayingForwards'],
+    'is-playing-vinyl-mode': value['isPlayingVinylMode'],
+    'is-searching': value['isSearching'],
+    'is-synced': value['isSynced'],
+    'is-tempo-master': value['isTempoMaster'],
+    'is-track-loaded': value['isTrackLoaded'],
+    kind: value['kind'],
+    name: value['name'],
+    number: value['number'],
+    pitch: value['pitch'],
+    'pitch-display': value['pitchDisplay'],
+    'pitch-multiplier': value['pitchMultiplier'],
+    tempo: value['tempo'],
+    'time-played': TimeToJSON(value['timePlayed']),
+    'time-remaining': TimeToJSON(value['timeRemaining']),
+    track: TrackToJSON(value['track']),
+    'track-bpm': value['trackBpm'],
+    'track-number': value['trackNumber'],
+    'track-source-player': value['trackSourcePlayer'],
   }
 }

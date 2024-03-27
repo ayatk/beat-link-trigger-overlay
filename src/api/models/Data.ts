@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime'
+import { mapValues } from '../runtime'
 import type { Player } from './Player'
 import { PlayerFromJSON, PlayerFromJSONTyped, PlayerToJSON } from './Player'
 
@@ -52,9 +52,7 @@ export interface Data {
  * Check if a given object implements the Data interface.
  */
 export function instanceOfData(value: object): boolean {
-  let isInstance = true
-
-  return isInstance
+  return true
 }
 
 export function DataFromJSON(json: any): Data {
@@ -62,31 +60,27 @@ export function DataFromJSON(json: any): Data {
 }
 
 export function DataFromJSONTyped(json: any, ignoreDiscriminator: boolean): Data {
-  if (json === undefined || json === null) {
+  if (json == null) {
     return json
   }
   return {
-    collections: !exists(json, 'collections')
-      ? undefined
-      : mapValues(json['collections'], PlayerFromJSON),
-    master: !exists(json, 'master') ? undefined : PlayerFromJSON(json['master']),
-    mixers: !exists(json, 'mixers') ? undefined : mapValues(json['mixers'], PlayerFromJSON),
-    players: !exists(json, 'players') ? undefined : mapValues(json['players'], PlayerFromJSON),
+    collections:
+      json['collections'] == null ? undefined : mapValues(json['collections'], PlayerFromJSON),
+    master: json['master'] == null ? undefined : PlayerFromJSON(json['master']),
+    mixers: json['mixers'] == null ? undefined : mapValues(json['mixers'], PlayerFromJSON),
+    players: json['players'] == null ? undefined : mapValues(json['players'], PlayerFromJSON),
   }
 }
 
 export function DataToJSON(value?: Data | null): any {
-  if (value === undefined) {
-    return undefined
-  }
-  if (value === null) {
-    return null
+  if (value == null) {
+    return value
   }
   return {
     collections:
-      value.collections === undefined ? undefined : mapValues(value.collections, PlayerToJSON),
-    master: PlayerToJSON(value.master),
-    mixers: value.mixers === undefined ? undefined : mapValues(value.mixers, PlayerToJSON),
-    players: value.players === undefined ? undefined : mapValues(value.players, PlayerToJSON),
+      value['collections'] == null ? undefined : mapValues(value['collections'], PlayerToJSON),
+    master: PlayerToJSON(value['master']),
+    mixers: value['mixers'] == null ? undefined : mapValues(value['mixers'], PlayerToJSON),
+    players: value['players'] == null ? undefined : mapValues(value['players'], PlayerToJSON),
   }
 }

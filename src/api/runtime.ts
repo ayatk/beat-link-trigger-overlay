@@ -21,7 +21,7 @@ export interface ConfigurationParameters {
   queryParamsStringify?: (params: HTTPQuery) => string // stringify function for query strings
   username?: string // parameter for basic security
   password?: string // parameter for basic security
-  apiKey?: string | ((name: string) => string) // parameter for apiKey security
+  apiKey?: string | Promise<string> | ((name: string) => string | Promise<string>) // parameter for apiKey security
   accessToken?:
     | string
     | Promise<string>
@@ -61,7 +61,7 @@ export class Configuration {
     return this.configuration.password
   }
 
-  get apiKey(): ((name: string) => string) | undefined {
+  get apiKey(): ((name: string) => string | Promise<string>) | undefined {
     const apiKey = this.configuration.apiKey
     if (apiKey) {
       return typeof apiKey === 'function' ? apiKey : () => apiKey
@@ -92,6 +92,10 @@ export const DefaultConfig = new Configuration()
  * This is the base class for all generated API classes.
  */
 export class BaseAPI {
+  private static readonly jsonRegex = new RegExp(
+    '^(:?application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$',
+    'i'
+  )
   private middleware: Middleware[]
 
   constructor(protected configuration = DefaultConfig) {
@@ -112,6 +116,23 @@ export class BaseAPI {
   withPostMiddleware<T extends BaseAPI>(this: T, ...postMiddlewares: Array<Middleware['post']>) {
     const middlewares = postMiddlewares.map(post => ({ post }))
     return this.withMiddleware<T>(...middlewares)
+  }
+
+  /**
+   * Check if the given MIME is a JSON MIME.
+   * JSON MIME examples:
+   *   application/json
+   *   application/json; charset=UTF8
+   *   APPLICATION/JSON
+   *   application/vnd.company+json
+   * @param mime - MIME (Multipurpose Internet Mail Extensions)
+   * @return True if the given MIME is JSON, false otherwise.
+   */
+  protected isJsonMime(mime: string | null | undefined): boolean {
+    if (!mime) {
+      return false
+    }
+    return BaseAPI.jsonRegex.test(mime)
   }
 
   protected async request(
@@ -159,14 +180,22 @@ export class BaseAPI {
       })),
     }
 
+    let body: any
+    if (
+      isFormData(overriddenInit.body) ||
+      overriddenInit.body instanceof URLSearchParams ||
+      isBlob(overriddenInit.body)
+    ) {
+      body = overriddenInit.body
+    } else if (this.isJsonMime(headers['Content-Type'])) {
+      body = JSON.stringify(overriddenInit.body)
+    } else {
+      body = overriddenInit.body
+    }
+
     const init: RequestInit = {
       ...overriddenInit,
-      body:
-        isFormData(overriddenInit.body) ||
-        overriddenInit.body instanceof URLSearchParams ||
-        isBlob(overriddenInit.body)
-          ? overriddenInit.body
-          : JSON.stringify(overriddenInit.body),
+      body,
     }
 
     return { url, init }
@@ -246,21 +275,30 @@ function isFormData(value: any): value is FormData {
 
 export class ResponseError extends Error {
   override name: 'ResponseError' = 'ResponseError'
-  constructor(public response: Response, msg?: string) {
+  constructor(
+    public response: Response,
+    msg?: string
+  ) {
     super(msg)
   }
 }
 
 export class FetchError extends Error {
   override name: 'FetchError' = 'FetchError'
-  constructor(public cause: Error, msg?: string) {
+  constructor(
+    public cause: Error,
+    msg?: string
+  ) {
     super(msg)
   }
 }
 
 export class RequiredError extends Error {
   override name: 'RequiredError' = 'RequiredError'
-  constructor(public field: string, msg?: string) {
+  constructor(
+    public field: string,
+    msg?: string
+  ) {
     super(msg)
   }
 }
@@ -312,11 +350,6 @@ export interface RequestOpts {
   headers: HTTPHeaders
   query?: HTTPQuery
   body?: HTTPBody
-}
-
-export function exists(json: any, key: string) {
-  const value = json[key]
-  return value !== null && value !== undefined
 }
 
 export function querystring(params: HTTPQuery, prefix: string = ''): string {

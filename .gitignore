@@ -8,3 +8,5 @@
 .parcel-cache/
 dist/
 node_modules
+
+*storybook.log

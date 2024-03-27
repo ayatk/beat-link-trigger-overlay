@@ -13,8 +13,8 @@
  */
 
 import * as runtime from '../runtime'
-import type { Data } from '../models'
-import { DataFromJSON, DataToJSON } from '../models'
+import type { Data } from '../models/index'
+import { DataFromJSON, DataToJSON } from '../models/index'
 
 /**
  * DefaultApi - interface

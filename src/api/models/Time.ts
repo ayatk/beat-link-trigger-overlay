@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime'
+import { mapValues } from '../runtime'
 /**
  *
  * @export
@@ -61,15 +61,13 @@ export interface Time {
  * Check if a given object implements the Time interface.
  */
 export function instanceOfTime(value: object): boolean {
-  let isInstance = true
-  isInstance = isInstance && 'display' in value
-  isInstance = isInstance && 'frameTenths' in value
-  isInstance = isInstance && 'frames' in value
-  isInstance = isInstance && 'minutes' in value
-  isInstance = isInstance && 'rawMilliseconds' in value
-  isInstance = isInstance && 'seconds' in value
-
-  return isInstance
+  if (!('display' in value)) return false
+  if (!('frameTenths' in value)) return false
+  if (!('frames' in value)) return false
+  if (!('minutes' in value)) return false
+  if (!('rawMilliseconds' in value)) return false
+  if (!('seconds' in value)) return false
+  return true
 }
 
 export function TimeFromJSON(json: any): Time {
@@ -77,7 +75,7 @@ export function TimeFromJSON(json: any): Time {
 }
 
 export function TimeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Time {
-  if (json === undefined || json === null) {
+  if (json == null) {
     return json
   }
   return {
@@ -91,18 +89,15 @@ export function TimeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Time
 }
 
 export function TimeToJSON(value?: Time | null): any {
-  if (value === undefined) {
-    return undefined
-  }
-  if (value === null) {
-    return null
+  if (value == null) {
+    return value
   }
   return {
-    display: value.display,
-    'frame-tenths': value.frameTenths,
-    frames: value.frames,
-    minutes: value.minutes,
-    'raw-milliseconds': value.rawMilliseconds,
-    seconds: value.seconds,
+    display: value['display'],
+    'frame-tenths': value['frameTenths'],
+    frames: value['frames'],
+    minutes: value['minutes'],
+    'raw-milliseconds': value['rawMilliseconds'],
+    seconds: value['seconds'],
   }
 }

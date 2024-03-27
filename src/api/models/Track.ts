@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime'
+import { mapValues } from '../runtime'
 /**
  *
  * @export
@@ -103,22 +103,20 @@ export interface Track {
  * Check if a given object implements the Track interface.
  */
 export function instanceOfTrack(value: object): boolean {
-  let isInstance = true
-  isInstance = isInstance && 'album' in value
-  isInstance = isInstance && 'artist' in value
-  isInstance = isInstance && 'comment' in value
-  isInstance = isInstance && 'duration' in value
-  isInstance = isInstance && 'genre' in value
-  isInstance = isInstance && 'id' in value
-  isInstance = isInstance && 'key' in value
-  isInstance = isInstance && 'rating' in value
-  isInstance = isInstance && 'slot' in value
-  isInstance = isInstance && 'startingTempo' in value
-  isInstance = isInstance && 'title' in value
-  isInstance = isInstance && 'type' in value
-  isInstance = isInstance && 'year' in value
-
-  return isInstance
+  if (!('album' in value)) return false
+  if (!('artist' in value)) return false
+  if (!('comment' in value)) return false
+  if (!('duration' in value)) return false
+  if (!('genre' in value)) return false
+  if (!('id' in value)) return false
+  if (!('key' in value)) return false
+  if (!('rating' in value)) return false
+  if (!('slot' in value)) return false
+  if (!('startingTempo' in value)) return false
+  if (!('title' in value)) return false
+  if (!('type' in value)) return false
+  if (!('year' in value)) return false
+  return true
 }
 
 export function TrackFromJSON(json: any): Track {
@@ -126,7 +124,7 @@ export function TrackFromJSON(json: any): Track {
 }
 
 export function TrackFromJSONTyped(json: any, ignoreDiscriminator: boolean): Track {
-  if (json === undefined || json === null) {
+  if (json == null) {
     return json
   }
   return {
@@ -147,25 +145,22 @@ export function TrackFromJSONTyped(json: any, ignoreDiscriminator: boolean): Tra
 }
 
 export function TrackToJSON(value?: Track | null): any {
-  if (value === undefined) {
-    return undefined
-  }
-  if (value === null) {
-    return null
+  if (value == null) {
+    return value
   }
   return {
-    album: value.album,
-    artist: value.artist,
-    comment: value.comment,
-    duration: value.duration,
-    genre: value.genre,
-    id: value.id,
-    key: value.key,
-    rating: value.rating,
-    slot: value.slot,
-    'starting-tempo': value.startingTempo,
-    title: value.title,
-    type: value.type,
-    year: value.year,
+    album: value['album'],
+    artist: value['artist'],
+    comment: value['comment'],
+    duration: value['duration'],
+    genre: value['genre'],
+    id: value['id'],
+    key: value['key'],
+    rating: value['rating'],
+    slot: value['slot'],
+    'starting-tempo': value['startingTempo'],
+    title: value['title'],
+    type: value['type'],
+    year: value['year'],
   }
 }
